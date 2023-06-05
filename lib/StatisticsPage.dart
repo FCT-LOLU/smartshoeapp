@@ -160,16 +160,17 @@ class StatisticsPageState extends State<StatisticsPage> {
                                     ShoesDataListId.length, (index) {
                                   return ShoesDataListId[index]['humidity'];
                                 });
+
                                 List<HumidityShoeData> chartHumidityData = [];
 
                                 List<HumidityShoeData>
                                     generateChartHumidityData(
-                                        List<double> humidityRates) {
+                                        List<double> dataHumidity) {
                                   List<HumidityShoeData> chartHumidityData = [];
-                                  int i = 0;
-                                  humidityRates.forEach((humidity) {
+                                  int i = 1;
+                                  dataHumidity.forEach((key) {
                                     chartHumidityData
-                                        .add(HumidityShoeData(humidity, i));
+                                        .add(HumidityShoeData(key, i));
                                     i += 1;
                                   });
                                   return chartHumidityData;
@@ -188,7 +189,7 @@ class StatisticsPageState extends State<StatisticsPage> {
                                 List<LightShoeData> generateChartlightData(
                                     List<double> lightRates) {
                                   List<LightShoeData> chartlightData = [];
-                                  int i = 0;
+                                  int i = 1;
                                   lightRates.forEach((light) {
                                     chartlightData.add(LightShoeData(light, i));
                                     i += 1;
@@ -212,7 +213,7 @@ class StatisticsPageState extends State<StatisticsPage> {
                                         List<double> temperatureRates) {
                                   List<TemperatureShoeData>
                                       chartTemperatureData = [];
-                                  int i = 0;
+                                  int i = 1;
                                   temperatureRates.forEach((temp) {
                                     chartTemperatureData
                                         .add(TemperatureShoeData(temp, i));
@@ -235,11 +236,36 @@ class StatisticsPageState extends State<StatisticsPage> {
                                         width: double.infinity,
                                         height: 200,
                                         child: SfCartesianChart(
-                                          primaryXAxis: CategoryAxis(),
-                                          series: <ChartSeries<HumidityShoeData,
-                                              int>>[
-                                            LineSeries<HumidityShoeData, int>(
-                                              color: Colors.amber,
+                                          enableAxisAnimation: true,
+                                          primaryXAxis: CategoryAxis(
+                                            title: AxisTitle(
+                                                text: 'Index of record times',
+                                                textStyle: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: 14,
+                                                    fontStyle: FontStyle.italic,
+                                                    fontWeight:
+                                                        FontWeight.w300)),
+                                          ),
+                                          primaryYAxis: NumericAxis(
+                                            title: AxisTitle(
+                                                text: 'Humidity Rate in %',
+                                                textStyle: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: 14,
+                                                    fontStyle: FontStyle.italic,
+                                                    fontWeight:
+                                                        FontWeight.w300)),
+                                          ),
+                                          series: <
+                                              ChartSeries<HumidityShoeData,
+                                                  int>>[
+                                            LineSeries<HumidityShoeData,
+                                                int>(
+                                              color: const Color.fromARGB(
+                                                  255, 68, 103, 163),
                                               dataSource: chartHumidityData,
                                               xValueMapper:
                                                   (HumidityShoeData data, _) =>
@@ -253,7 +279,7 @@ class StatisticsPageState extends State<StatisticsPage> {
                                             )
                                           ],
                                         )),
-                                    SizedBox(height: 20),
+                                    SizedBox(height: 30),
                                     const Text('Evolution of the enlightment'),
                                     Container(
                                         padding: const EdgeInsets.symmetric(
@@ -261,11 +287,34 @@ class StatisticsPageState extends State<StatisticsPage> {
                                         width: double.infinity,
                                         height: 200,
                                         child: SfCartesianChart(
-                                          primaryXAxis: CategoryAxis(),
-                                          series: <ChartSeries<LightShoeData,
-                                              int>>[
+                                          enableAxisAnimation: true,
+                                          primaryXAxis: CategoryAxis(
+                                            title: AxisTitle(
+                                                text: 'Index of record times',
+                                                textStyle: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: 14,
+                                                    fontStyle: FontStyle.italic,
+                                                    fontWeight:
+                                                        FontWeight.w300)),
+                                          ),
+                                          primaryYAxis: NumericAxis(
+                                            title: AxisTitle(
+                                                text: 'Enlightment in lumen',
+                                                textStyle: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: 14,
+                                                    fontStyle: FontStyle.italic,
+                                                    fontWeight:
+                                                        FontWeight.w300)),
+                                          ),
+                                          series: <
+                                              ChartSeries<LightShoeData, int>>[
                                             LineSeries<LightShoeData, int>(
-                                              color: Colors.red,
+                                              color: Color.fromARGB(
+                                                  255, 221, 179, 62),
                                               dataSource: chartlightData,
                                               xValueMapper:
                                                   (LightShoeData data, _) =>
@@ -279,7 +328,7 @@ class StatisticsPageState extends State<StatisticsPage> {
                                             )
                                           ],
                                         )),
-                                    SizedBox(height: 20),
+                                    SizedBox(height: 30),
                                     const Text('Evolution of the temperature'),
                                     Container(
                                         padding: const EdgeInsets.symmetric(
@@ -287,12 +336,36 @@ class StatisticsPageState extends State<StatisticsPage> {
                                         width: double.infinity,
                                         height: 200,
                                         child: SfCartesianChart(
-                                          primaryXAxis: CategoryAxis(),
-                                          series: <ChartSeries<
-                                              TemperatureShoeData, int>>[
+                                          enableAxisAnimation: true,
+                                          primaryXAxis: CategoryAxis(
+                                            title: AxisTitle(
+                                                text: 'Index of record times',
+                                                textStyle: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: 14,
+                                                    fontStyle: FontStyle.italic,
+                                                    fontWeight:
+                                                        FontWeight.w300)),
+                                          ),
+                                          primaryYAxis: NumericAxis(
+                                            title: AxisTitle(
+                                                text: 'Temperature in C°',
+                                                textStyle: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: 14,
+                                                    fontStyle: FontStyle.italic,
+                                                    fontWeight:
+                                                        FontWeight.w300)),
+                                          ),
+                                          series: <
+                                              ChartSeries<TemperatureShoeData,
+                                                  int>>[
                                             LineSeries<TemperatureShoeData,
                                                 int>(
-                                              color: Colors.green,
+                                              color: Color.fromARGB(
+                                                  255, 247, 83, 42),
                                               dataSource: chartTemperatureData,
                                               xValueMapper:
                                                   (TemperatureShoeData data,

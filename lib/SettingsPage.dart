@@ -98,10 +98,11 @@ class SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            style: TextStyle(fontSize: 30, color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 4, 104, 130),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
+          color: Colors.white,
           onPressed: () {
             // Action souhaitée lors de l'appui sur le bouton flèche
             // Par exemple, pour revenir à l'écran précédent :
