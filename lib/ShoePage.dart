@@ -9,6 +9,18 @@ class ShoePage extends StatelessWidget {
   String? id;
   ShoePage({super.key, required this.id});
 
+  void updateDocumentField(String collectionName, String documentId,
+      String fieldName, dynamic newValue) {
+    FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(documentId)
+        .update({fieldName: newValue}).then((value) {
+      print("Document field updated successfully!");
+    }).catchError((error) {
+      print("Failed to update document field: $error");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
@@ -64,7 +76,7 @@ class ShoePage extends StatelessWidget {
 
     return Center(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
             child: Text(
@@ -72,7 +84,7 @@ class ShoePage extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 7.0),
           Center(
             child: photoUrl == ""
                 ? const Text("Any Photo Here")
@@ -83,7 +95,7 @@ class ShoePage extends StatelessWidget {
                     height: 200,
                   ),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 7.0),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -91,17 +103,17 @@ class ShoePage extends StatelessWidget {
                 Text(
                   "Brand: $brand",
                   style: const TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 15.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(width: 18.0),
+                const SizedBox(width: 15.0),
                 Row(
                   children: [
                     const Text(
                       'Waterproof:',
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 15.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -114,17 +126,17 @@ class ShoePage extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 7.0),
           const Center(
             child: Text(
               "Colors:",
               style: TextStyle(
-                fontSize: 18.0,
+                fontSize: 15.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 7.0),
           Center(
             child: SizedBox(
               height: 50, // Spécifiez la hauteur souhaitée pour le Container
@@ -140,7 +152,7 @@ class ShoePage extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       return Center(
                         child: Padding(
-                          padding: const EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.all(7.0),
                           child: Container(
                             width: 20,
                             height: 20,
@@ -171,7 +183,7 @@ class ShoePage extends StatelessWidget {
             child: Text(
               'Seasons:',
               style: TextStyle(
-                fontSize: 18.0,
+                fontSize: 15.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -180,46 +192,51 @@ class ShoePage extends StatelessWidget {
             child: Text(
               seasons,
               style: const TextStyle(
-                fontSize: 18.0,
+                fontSize: 15.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 7.0),
           Text(
             'Type: $typeShoe',
             style: const TextStyle(
-              fontSize: 18.0,
+              fontSize: 15.0,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 8.0),
-          Text(
-            'ID: $id',
-            style: const TextStyle(
-              fontSize: 16.0,
-            ),
-          ),
+          const SizedBox(height: 7.0),
           Container(
-            padding: const EdgeInsets.all(8.0),
-            height: 60.0,
+            padding: const EdgeInsets.all(7.0),
+            height: 110.0,
             width: double.infinity,
             child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        appState.changeChange(true);
-                        appState.changeIndexMyHomePage(4);
+                        //write in firestore in the collection user where the id is the UID and put the id of the shoe in the field IdShoeToConnect
+                        updateDocumentField("user", appState.uid,
+                            "IdShoeToConnect", appState.actualShoe);
                       },
-                      child: const Text("Change Shoe")),
-                  const SizedBox(width: 8.0),
-                  ElevatedButton(
-                      onPressed: () {
-                        deleteShoe();
-                      },
-                      child: const Text("Delete Shoe"))
+                      child: const Text("Connect to a smart shoe tree")),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            appState.changeChange(true);
+                            appState.changeIndexMyHomePage(4);
+                          },
+                          child: const Text("Change Shoe")),
+                      const SizedBox(width: 7.0),
+                      ElevatedButton(
+                          onPressed: () {
+                            deleteShoe();
+                          },
+                          child: const Text("Delete Shoe"))
+                    ],
+                  ),
                 ],
               ),
             ),
